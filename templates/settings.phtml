@@ -1,0 +1,45 @@
+<?php
+/**
+ * Template file for the settings page.
+ *
+ * @author  Ondřej Doněk, <ondrejd@gmail.com>
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-compare_filter_search
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+?>
+<div class="wrap">
+    <h1 class="title"><?php _e( 'Nastavení pluginu', ODWPCFS_SLUG ); ?></h1>
+    <?php foreach ( $messages as $message ) : ?>
+    <div class="notice notice-<?php echo $message['type']; ?> is-dismissible"> 
+        <p><strong><?php echo $message['msg']; ?></strong></p>
+    </div>
+    <?php endforeach; ?>
+    <div class="form-wrap">
+        <h2 class="title"><?php _e( 'Zobrazení', ODWPCFS_SLUG ); ?></h2>
+        <form method="post" action="" novalidate="novalidate">
+            <input type="hidden" name="action" value="update">
+            <input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'odwpcfs-settings' ); ?>">
+            <table class="form-table">
+                <tbody>
+                    <tr>
+                        <th scope="row">
+                            <label for="odwpcfs-default_count_in_list"><?php _e( 'Počet položek', ODWPCFS_SLUG ); ?></label>
+                        </th>
+                        <td>
+                            <input type="number" name="odwpcfs-default_count_in_list" id="odwpcfs-default_count_in_list" value="<?php echo $default_count_in_list; ?>" class="small-text">
+                            <p class="description"><?php _e( 'Počet položek zobrazených na jedné stránce pomocí widgetu <b>Tabulka společností</b>.', ODWPCFS_SLUG ); ?></p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="submit">
+                <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e( 'Uložit změny', ODWPCFS_SLUG ); ?>">
+            </p>
+        </form>
+    </div>
+</div>

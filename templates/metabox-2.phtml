@@ -1,0 +1,22 @@
+<?php
+/**
+ * Template file for metabox "Vstupní bonus".
+ *
+ * @author  Ondřej Doněk, <ondrejd@gmail.com>
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-compare_filter_search
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+wp_nonce_field( 'odwpcfs-mb2-nonce', 'odwpcfs-metabox-2-nonce' );
+
+?><div>
+    <label class="screen-reader-text" for="odwpcfs-metabox-2-input"><?php _e( 'Zadejte vstupní bonus:', ODWPCFS_SLUG ); ?></label>
+    <p>
+        <label for="odwpcfs-metabox-2-input"><?php _e( 'Vložte text: ', ODWPCFS_SLUG ); ?></label>
+        <input type="text" id="odwpcfs-metabox-2-input" name="odwpcfs-metabox-2-input" value="<?php echo $val;?>" placeholder="50 % z max 1.500 Kč">
+    </p>
+</div>

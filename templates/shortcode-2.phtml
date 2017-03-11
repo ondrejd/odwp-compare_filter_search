@@ -1,0 +1,53 @@
+<?php
+/**
+ * Template file for shortcode "Přehled vlastností společnosti".
+ *
+ * @author  Ondřej Doněk, <ondrejd@gmail.com>
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-compare_filter_search
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+/**
+ * Used parameters (taken from {@see odwpcfs_add_shortcode_2()}).
+ * 
+ * @param array $filters
+ * @param array $f_vals
+ */
+
+?><div class="odwpcfs-shortcode-2">
+    <?php if ( (bool) $attrs['show_title'] === true && ! empty( $attrs['title'] ) ) : ?>
+    <h2 class="odwpcfs-shortcode-2-title"><?php echo esc_html( $attrs['title'] ); ?></h2>
+    <?php endif;?>
+
+    <div class="odwpcfs-filters-table">
+        <?php 
+        $i = 0; 
+        foreach ( $filters as $filter ) : 
+        ?>
+        
+        <?php if ( $i % 2 == 0) : ?>
+        <div class="odwpcfs-filters-table-row">
+        <?php endif; ?>
+            <div class="odwpcfs-filters-table-cell odwpcfs-filters-table-cell-<?php echo ( $i % 2 == 0) ? 'left' : 'right'; ?>">
+                <span class="odwpcfs-filters-table-cell-label"><?php echo $filter->name; ?></span>
+                <span class="odwpcfs-filters-table-cell-value"><?php echo $f_vals[$filter->id]; ?></span>
+            </div>
+        <?php if ( $i % 2 != 0) : ?>
+        </div>
+        <?php endif; ?>
+        
+        <?php 
+            $i++;
+        endforeach; 
+        ?>
+
+        <?php if ( $i % 2 != 0) : ?>
+            <div class="odwpcfs-filters-table-cell odwpcfs-filters-table-cell-right">&nbsp;</div>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>

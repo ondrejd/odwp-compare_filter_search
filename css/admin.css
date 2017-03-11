@@ -1,0 +1,44 @@
+
+/* Table columns */
+th.column-odwpcfs_logo_column { width: 90px; }
+th.column-odwpcfs_rating_column { width: 219px; }
+th.column-odwpcfs_bonus_column { width: 219px; }
+th.column-odwpcfs_review_column,
+td.column-odwpcfs_review_column {
+    text-align: center;
+    vertical-align: middle; 
+    width: 40px;
+}
+td.column-odwpcfs_review_column .without_review { color: #f2f2f2; }
+td.column-odwpcfs_logo_column { vertical-align: middle; }
+td.column-odwpcfs_logo_column img { width: 100px; }
+td.column-odwpcfs_rating_column { vertical-align: middle; }
+
+/* Stars rating */
+.star-ratings-sprite {
+    background: url("../img/stars.png") repeat-x;
+    display: inline-block;
+    font-size: 0;
+    height: 21px;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 219px;
+    margin: 0 auto;
+}
+.star-ratings-sprite-rating {
+    background: url("../img/stars.png") repeat-x;
+    background-position: 0 100%;
+    float: left;
+    height: 21px;
+    display: block;
+}
+
+/* TinyMCE icon */
+i.odwpcfs_shortcode_1-icon {
+    background-image: url('../img/portugalfav.png');
+}
+
+#odwpcfs-metabox-3-input-url {
+    min-width: 300px;
+}

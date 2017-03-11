@@ -1,0 +1,21 @@
+<?php
+/**
+ * Template file for the fourth metabox "Odkaz na registraci".
+ *
+ * @author  Ondřej Doněk, <ondrejd@gmail.com>
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-compare_filter_search
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+wp_nonce_field( 'odwpcfs-mb4-nonce', 'odwpcfs-metabox-4-nonce' );
+
+?><div>
+    <label class="screen-reader-text" for="odwpcfs-metabox-4-input"><?php _e( 'Zadejte URL registrační stránky:', ODWPCFS_SLUG ); ?></label>
+    <p>
+        <input type="url" id="odwpcfs-metabox-4-input" name="odwpcfs-metabox-4-input" value="<?php echo $val; ?>" placeholder="http://www.test.com/" style="width: 100%;">
+    </p>
+</div>

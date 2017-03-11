@@ -1,0 +1,37 @@
+<?php
+/**
+ * Template file for metabox "Odkaz na recenzi".
+ *
+ * @author  Ondřej Doněk, <ondrejd@gmail.com>
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-compare_filter_search
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+wp_nonce_field( 'odwpcfs-mb3-nonce', 'odwpcfs-metabox-3-nonce' );
+
+?><div>
+    <label class="screen-reader-text" for="odwpcfs-metabox-3-input"><?php _e( 'Zadejte URL stránky s recenzí:', ODWPCFS_SLUG ); ?></label>
+    <p>
+        <label for="odwpcfs-metabox-3-input"><?php _e( 'Vyberte stránku: ', ODWPCFS_SLUG ); ?></label>
+        <?php wp_dropdown_pages( array(
+            'depth' => 0,
+            'child_of' => 0,
+            'selected' => $value,
+            'echo' => 1,
+            'name' => 'odwpcfs-metabox-3-input',
+            'id' => 'odwpcfs-metabox-3-input',
+            'class' => null,
+            'show_option_none' => __( 'Vyberte stránku', ODWPCFS_CPT ),
+            'show_option_no_change' => null,
+            'option_none_value' => 0,
+        ) ); ?>
+        <?php /*
+        <label for="odwpcfs-metabox-3-input-url"><?php _e( 'nebo vložte URL: ', ODWPCFS_SLUG ); ?></label>
+        <input type="url" id="odwpcfs-metabox-3-input-url" name="odwpcfs-metabox-3-input-url" value="<?php echo $val; ?>" placeholder="http://www.test.com/">
+         */ ?>
+    </p>
+</div>

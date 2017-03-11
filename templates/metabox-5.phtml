@@ -1,0 +1,54 @@
+<?php
+/**
+ * Template file for metabox "Vlastnosti".
+ *
+ * @author  Ondřej Doněk, <ondrejd@gmail.com>
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-compare_filter_search
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+/**
+ * Used parameters (taken from {@see odwpcfs_show_metabox_5()}.
+ *
+ * @param array   $filters     Array with filters.
+ * @param integer $filter_vals Array with post's values for the filters.
+ */
+
+wp_nonce_field( 'odwpcfs-mb1-nonce', 'odwpcfs-metabox-5-nonce' );
+
+?><div class="form-wrap">
+    <table class="form-table">
+        <tbody>
+            <?php foreach ( $filters as $filter ) : ?>
+            <tr>
+                <th scope="row">
+                    <label for="odwpcfs-metabox-5-input"><?php echo $filter->name; ?></label>
+                </th>
+                <td>
+                    <?php if ( (int) $filter->type === 0 ) : ?>
+                    <input type="checkbox" id="odwpcfs-metabox-5-input" name="odwpcfs-metabox-5-input[<?php echo $filter->id; ?>]" <?php checked( (bool) $filter_vals[$filter->id] ); ?>>
+                    <?php elseif ( (int) $filter->type === 1 || ((int) $filter->type === 2 && empty( $filter->extra ) ) ) : ?>
+                    <input type="text" id="odwpcfs-metabox-5-input" width="40" name="odwpcfs-metabox-5-input[<?php echo $filter->id; ?>]" value="<?php echo $filter_vals[$filter->id]; ?>" class="regular-text">
+                    <?php elseif ( (int) $filter->type === 2 ) : 
+                            $options = explode( ';', $filter->extra );
+                        ?>
+                    <select id="odwpcfs-metabox-5-input" name="odwpcfs-metabox-5-input[<?php echo $filter->id; ?>]">
+                        <option value=""><?php _e( 'Vyberte z možností', ODWPCFS_SLUG ); ?>
+                        <?php foreach ( $options as $option ) : ?>
+                        <option value="<?php echo $option; ?>" <?php selected( $option, $filter_vals[$filter->id] ); ?>><?php echo $option; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <?php endif; ?>
+                    <?php if ( ! empty( $filter->description ) ) : ?>
+                    <p class="description description-wide"><?php echo $filter->description; ?></p>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

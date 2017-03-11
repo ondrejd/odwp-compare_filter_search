@@ -1,0 +1,189 @@
+<?php
+/**
+ * Template file for the settings page.
+ *
+ * @author  Ondřej Doněk, <ondrejd@gmail.com>
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-compare_filter_search
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+/**
+ * Used parameters (taken from {@see odwpcfs_settings_page_render()}).
+ *
+ * @param string  $action    Name of current action.
+ * @param object  $filter    Selected filter (NULL if none).
+ * @param array   $filters   Array with filters.
+ * @param integer $filter_id ID of selected filter (NULL if none).
+ * @param string  $url       URL of the settings page.
+ */
+
+$is_edit = ( $action == 'edit-filter' && $filter_id > 0 && is_object( $filter ) );
+
+$filters_count = count( $filters );
+switch( $filters_count ) {
+    case 0:
+        $filters_count = __( '0 položek', ODWPCFS_SLUG );
+        break;
+    case 1:
+        $filters_count = __( '1 položka', ODWPCFS_SLUG );
+        break;
+    case 2:
+    case 3:
+    case 4:
+        $filters_count = __( '2 položky', ODWPCFS_SLUG );
+        break;
+    default:
+        $filters_count = sprintf( __( '%d položek', ODWPCFS_SLUG ), $filters_count );
+        break;
+}
+
+$doaction = $action == 'edit-filter' ? 'update-filter' : ( $action == 'delete' ? 'insert' : $action );
+
+?>
+<div class="wrap">
+    <h1 class="title"><?php _e( 'Dostupné filtry', ODWPCFS_SLUG ); ?></h1>
+    <?php foreach ( $messages as $message ) : ?>
+    <div class="notice notice-<?php echo $message['type']; ?> is-dismissible"> 
+        <p><strong><?php echo $message['msg']; ?></strong></p>
+    </div>
+    <?php endforeach; ?>
+    <p><?php _e( 'Zde jsou zadané filtry pro jednotlivé společnosti. Tyto filtry jsou pak dostupné k doplnění na stránce pro přidání nové společnosti a pro editaci stávající - zároveň se však také vypisují v panelu s filtrem, kde dle nich uživatelé mohou třídit viditelné společnosti.', ODWPCFS_SLUG ); ?></p>
+    <div id="col-container" class="wp-clearfix">
+        <div id="col-left">
+            <div class="col-wrap">
+                <div class="form-wrap">
+                    <h2><?php _e( 'Vytvořit nový filtr', ODWPCFS_SLUG ); ?></h2>
+                    <form id="addtag" method="post" action="<?php echo $url; ?>" class="validate">
+                        <input type="hidden" name="action" value="<?php echo $doaction; ?>">
+                        <input type="hidden" name="filter_id" value="<?php echo $filter_id; ?>">
+                        <input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'odwpcfs-settings' ); ?>">
+                        <div class="form-field form-required term-name-wrap">
+                            <label for="filter-name"><?php _e( 'Název', ODWPCFS_SLUG ); ?></label>
+                            <input name="filter-name" id="filter-name" type="text" value="<?php if ( $is_edit ) { echo $filter->name; } ?>" size="40" aria-required="true">
+                            <p><?php _e( 'Název se bude v této podobě zobrazovat na webu.', ODWPCFS_SLUG ); ?></p>
+                        </div>
+                        <div class="form-field form-required term-type-wrap">
+                            <label for="filter-type"><?php _e( 'Typ', ODWPCFS_SLUG ); ?></label>
+                            <div>
+                                <label>
+                                    <input type="radio" name="filter-type" value="0"<?php if ( $is_edit ) { checked( (int) $filter->type, 0 ); } elseif ( ! $is_edit ) { echo 'checked'; } ?>>
+                                    <span><?php _e( 'Zaškrtávací pole', ODWPCFS_SLUG ); ?></span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="filter-type" value="1"<?php if ( $is_edit ) { checked( (int) $filter->type, 1 ); } ?>>
+                                    <span><?php _e( 'Prostý text', ODWPCFS_SLUG ); ?></span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="filter-type" value="2"<?php if ( $is_edit ) { checked( (int) $filter->type, 2 ); } ?>>
+                                    <span><?php _e( 'Výběr z možností', ODWPCFS_SLUG ); ?></span>
+                                    <br>
+                                    <div style="padding-left: 23px;">
+                                        <label class="screen-reader-text" for="filter-type2"><?php _e( 'Zadejte možnosti:', ODWPCFS_SLUG ); ?></label>
+                                        <input name="filter-type2" id="filter-type2" type="text" value="<?php if ( $is_edit && (int) $filter->type == 2 ) { echo $filter->extra; } ?>" size="40" aria-required="false" <?php if ( ! ( $is_edit && (int) $filter->type == 2 ) ) { echo 'disabled'; } ?>>
+                                    </div>
+                                </label>
+                            </div>
+                            <p><?php _e( 'Zadejte typ filtru - může být buď typu checkbox, výběr nebo prostý text. Výběr zadávejte ve formátu: <code>možnost 1;možnost 2;možnost 3</code>.', ODWPCFS_SLUG ); ?></p>
+                        </div>
+                        <div class="form-field term-description-wrap">
+                            <label for="filter-description"><?php _e( 'Popis', ODWPCFS_SLUG ); ?></label>
+                            <textarea name="filter-description" id="filter-description" rows="5" cols="40"><?php if ( $is_edit ) { echo $filter->description; } ?></textarea>
+                            <p><?php _e( 'Popis, pokud je zadán, je zobrazen jako <em>title</em> popisek názvu daného filtru.', ODWPCFS_SLUG ); ?></p>
+                        </div>
+                        <p class="submit">
+                            <?php if ( $doaction == 'update-filter' && $action == 'edit-filter' ) : ?>
+                            <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e( 'Uložit filtr', ODWPCFS_SLUG ); ?>">
+                            <?php else : ?>
+                            <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e( 'Vytvořit nový filtr', ODWPCFS_SLUG ); ?>">
+                            <?php endif; ?>
+                            <input type="submit" name="cancel" id="cancel" class="button" value="<?php _e( 'Zrušit', ODWPCFS_SLUG ); ?>">
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="col-right">
+            <div class="col-wrap">
+                <form id="posts-filter" method="post" action="<?php echo $url; ?>" novalidate="novalidate">
+                    <input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'odwpcfs-settings' ); ?>">
+                    <h2 class="screen-reader-text"><?php _e( 'Dostupné filtry', ODWPCFS_CPT ); ?></h2>
+                    <table class="wp-list-table widefat fixed striped tags">
+                        <thead>
+                            <tr>
+                                <td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-1"><?php _e( 'Označit vše', ODWPCFS_CPT ); ?></label><input id="cb-select-all-1" type="checkbox"></td>
+                                <th scope="col" id="name" class="manage-column column-name column-primary"><span><?php _e( 'Název', ODWPCFS_SLUG ); ?></span></th>
+                                <th scope="col" id="type" class="manage-column column-type"><span><?php _e( 'Typ filtru', ODWPCFS_SLUG ); ?></span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="the-list" data-wp-lists="list:tag">
+                            <?php foreach ( $filters as $filter ) : ?>
+                            <tr id="filter-<?php echo $filter->id; ?>">
+                                <th scope="row" class="check-column">
+                                    <input type="checkbox" name="id[]" value="<?php echo $filter->id; ?>">
+                                </th>
+                                <td class="name column-name" data-colname="<?php _e( 'Název', ODWPCFS_SLUG ); ?>">
+                                    <a href="<?php echo $url . '&amp;action=edit-filter&amp;filter_id=' . $filter->id; ?>"><strong><?php echo $filter->name; ?></strong></a><br>
+                                    <small><?php echo $filter->description; ?></small>
+                                </td>
+                                <td class="type column-type" data-colname="<?php _e( 'Typ', ODWPCFS_SLUG ); ?>">
+                                    <span><?php echo odwpcfs_filter_type_name( (int) $filter->type ); ?></span>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-2"><?php _e( 'Označit vše', ODWPCFS_CPT ); ?></label><input id="cb-select-all-2" type="checkbox"></td>
+                                <th scope="col" class="manage-column column-name column-primary"><span><?php _e( 'Název', ODWPCFS_SLUG ); ?></span></th>
+                                <th scope="col" class="manage-column column-type"><span><?php _e( 'Typ filtru', ODWPCFS_SLUG ); ?></span></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="tablenav bottom">
+                        <div class="alignleft actions bulkactions">
+                            <label for="bulk-action-selector-bottom" class="screen-reader-text"><?php _e( 'Zvolit akci pro hromadné úpravy', ODWPCFS_CPT ); ?></label>
+                            <select name="action" id="bulk-action-selector-bottom">
+                                <option value=""><?php _e( 'Hromadné úpravy', ODWPCFS_CPT ); ?></option>
+                                <option value="delete"><?php _e( 'Smazat', ODWPCFS_CPT ); ?></option>
+                            </select>
+                            <input type="submit" name="bulk-action" id="bulk-action" class="button action" value="Použít">
+                        </div>
+                        <div class="tablenav-pages one-page">
+                            <span class="displaying-num"><?php echo $filters_count; ?></span>
+                        </div>
+                        <br class="clear">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"><br></div>
+    <!--
+    <div class="form-wrap">
+        <h2 class="title"><?php _e( 'Ostatní', ODWPCFS_SLUG ); ?></h2>
+        <form method="post" action="" novalidate="novalidate">
+            <input type="hidden" name="action" value="update">
+            <input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'odwpcfs-settings' ); ?>">
+            <table class="form-table">
+                <tbody>
+                    <tr>
+                        <th scope="row">
+                            <label for="xxx"><?php _e( 'XXX', ODWPCFS_SLUG ); ?></label>
+                        </th>
+                        <td>
+                            <input name="xxx" type="text" id="xxx" value="" class="regular-text">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="submit">
+                <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e( 'Uložit změny', ODWPCFS_SLUG ); ?>">
+            </p>
+        </form>
+    </div>
+    -->
+</div>

@@ -1,0 +1,91 @@
+<?php
+/**
+ * Template file for widget "Filtr společností".
+ *
+ * @author  Ondřej Doněk, <ondrejd@gmail.com>
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-compare_filter_search
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+/**
+ * Used parameters (taken from {@see odwpcfs_filter_widget::widget()}).
+ *
+ * @param array $args
+ * @param array $instance
+ * @param array $filters
+ * @param array $filters_val
+ */
+
+// Starts widget
+echo $args['before_widget'];
+
+// Widget's title
+if ( ! empty( $instance['title'] ) ) {
+    echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+}
+
+?>
+<div class="odwpcfs-filter">
+    <pre><?php var_dump( $filters_val );?></pre>
+    <form method="post">
+<?php
+
+if ( count( $filters ) > 0 ) {
+    foreach ( $filters as $filter ) {
+        if ( (int) $filter->type == 0 ) {
+?>
+        <div class="odwpcfs-filter-section">
+            <p>
+                <label for="odwpcfs-filter-<?php echo $filter->id; ?>">
+                    <input type="checkbox" id="odwpcfs-filter-<?php echo $filter->id; ?>" name="odwpcfs-filter-<?php echo $filter->id; ?>" <?php if ( array_key_exists( $filter->id, $filters_val ) ) { checked( $filters_val[$filter->id], 'on' ); } ?>> 
+                    <strong><?php echo $filter->name; ?></strong>
+                </label>
+            </p>
+        </div>
+<?php
+        }
+        elseif ( (int) $filter->type == 0 ) {
+            // TODO Textové filtry!
+        }
+        elseif ( (int) $filter->type == 2 ) {
+            $options = explode( ';', $filter->extra );
+?>
+        <div class="odwpcfs-filter-section">
+            <p>
+                <strong><?php echo $filter->name; ?></strong><br>
+                <?php foreach ( $options as $option ) : ?>
+                <label>
+                    <input type="checkbox" name="odwpcfs-filter-<?php echo $filter->id; ?>[<?php echo $option; ?>]" <?php if ( array_key_exists( $filter->id, $filters_val ) ) { if( array_key_exists( $option, $filters_val[$filter->id] ) ) { echo 'checked'; } } ?>> 
+                    <span><?php echo $option; ?></span>
+                </label><br>
+                <?php endforeach; ?>
+            </p>
+        </div>
+<?php
+        }
+    }
+} else {
+?>
+        <div class="odwpcfs-filter-section odwpcfs-filter_widget-no_items">
+            <p>
+                <strong><?php echo __( 'Žádné filtry nebyly nalezeny.', ODWPCFS_SLUG ); ?></strong>
+            </p>
+        </div>
+<?php
+}
+
+?>
+        <p class="odwpcfs-filter-buttons">
+            <input type="submit" name="odwpcfs-filter-submit" class="button button-primary" value="<?php echo __( 'Filtruj', ODWPCFS_SLUG ); ?>">
+            <input type="submit" name="odwpcfs-filter-reset" class="button button-link" value="<?php echo __( 'Zruš', ODWPCFS_SLUG ); ?>">
+        </p>
+    </form>
+</div>
+<?php
+
+// Ends widget
+echo $args['after_widget'];

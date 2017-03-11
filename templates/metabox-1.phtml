@@ -1,0 +1,26 @@
+<?php
+/**
+ * Template file for metabox "Hodnoceni".
+ *
+ * @author  Ondřej Doněk, <ondrejd@gmail.com>
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-compare_filter_search
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+wp_nonce_field( 'odwpcfs-mb1-nonce', 'odwpcfs-metabox-1-nonce' );
+
+?><div>
+    <label class="screen-reader-text" for="odwpcfs-metabox-1-input"><?php _e( 'Zadejte hodnocení:', ODWPCFS_SLUG ); ?></label>
+    <p>
+        <label for="odwpcfs-metabox-1-input"><?php _e( 'Zadejte výši hodnocení:', ODWPCFS_SLUG ); ?></label>
+        <input type="number" id="odwpcfs-metabox-1-input" min="0" max="100" step="1" name="odwpcfs-metabox-1-input" value="<?php echo $val; ?>" style="width: 80px;">
+        <span><?php _e( '%', ODWPCFS_SLUG );?></span>
+    </p>
+    <div class="star-ratings-sprite">
+        <span id="odwpcfs-metabox-1-stars" style="width: <?php echo $val;?>%" class="star-ratings-sprite-rating"></span>
+    </div>
+</div>

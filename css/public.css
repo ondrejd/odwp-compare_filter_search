@@ -1,0 +1,139 @@
+/* Stars rating */
+.star-ratings-sprite {
+    background: url("../img/stars.png") repeat-x;
+    display: inline-block;
+    font-size: 0;
+    height: 21px;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 219px;
+    margin: 0 auto;
+}
+.star-ratings-sprite-rating {
+    background: url("../img/stars.png") repeat-x;
+    background-position: 0 100%;
+    float: left;
+    height: 21px;
+    display: block;
+}
+
+/* Stars rating - small version */
+.star-ratings-sprite-small {
+    background: url("../img/star-gray-sm.png") repeat-x;
+    display: inline-block;
+    font-size: 0;
+    height: 11px;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 109px;
+    margin: 0 auto;
+}
+.star-ratings-sprite-rating-small {
+    background: url("../img/star-orange-sm.png") repeat-x;
+    float: left;
+    height: 11px;
+    display: block;
+}
+
+/* Shortcode "Tabulka spolecnosti" */
+.odwpcfs-companies-table {
+    border: 0px none;
+}
+.odwpcfs-companies-table th,
+.odwpcfs-companies-table td {
+    border: 0px none;
+}
+.odwpcfs-companies-table th.column-logo,
+.odwpcfs-companies-table td.column-logo {
+    border: 0px none;
+    width: 120px;
+}
+.odwpcfs-companies-table th.column-rating,
+.odwpcfs-companies-table td.column-rating {
+    min-width: 109px;
+}
+.odwpcfs-companies-table th.column-bonus {
+    width: 70px;
+}
+.odwpcfs-companies-table th { font-size: 90%; }
+.odwpcfs-companies-table th:last-child { text-align: center; }
+.odwpcfs-companies-table .button { padding: 5px 10px 5px 10px; }
+.odwpcfs-companies-table td.column-logo img { width: 120px !important; }
+.odwpcfs-companies-table td.column-bonus { text-align: center; }
+.odwpcfs-company-no_review { color: #666; }
+/*.odwpcfs-companies-paging .button-link {
+    background-color: transparent !important;
+    border: 0px none;
+    font-weight: normal;
+}
+.odwpcfs-companies-paging .button-link:hover {
+    text-decoration: underline;
+}*/
+
+
+/* Widget "Filtr spolecnosti" */
+.odwpcfs-filter .odwpcfs-filter-section {
+    border-bottom: 1px dotted silver;
+    padding: 5px 0px 5px 0px;
+    margin-bottom: 5px;
+}
+.odwpcfs-filter .odwpcfs-filter-section:last-of-type {
+    border-bottom: 0px none;
+}
+.odwpcfs-filter .odwpcfs-filter-section > p {
+    margin: 0px 0px 0px 0px;
+}
+.odwpcfs-filter .button-link {
+    background-color: transparent !important;
+    border: 0px none;
+    font-weight: normal;
+}
+.odwpcfs-filter .button-link:hover {
+    text-decoration: underline;
+}
+
+
+
+/* Shortcode "Vlastnosti spolecnosti" */
+.odwpcfs-shortcode-2 { width: 100%; }
+.odwpcfs-shortcode-2-title {}
+.odwpcfs-shortcode-2 .odwpcfs-filters-table { width: 100%; }
+.odwpcfs-shortcode-2 .odwpcfs-filters-table-row { clear: both; width: 100%; }
+.odwpcfs-shortcode-2 .odwpcfs-filters-table-cell { float: left; width: 50%; }
+.odwpcfs-shortcode-2 .odwpcfs-filters-table-cell-left {}
+.odwpcfs-shortcode-2 .odwpcfs-filters-table-cell-right {}
+.odwpcfs-shortcode-2 .odwpcfs-filters-table-cell-label { display: inline-block; width: 65%; }
+.odwpcfs-shortcode-2 .odwpcfs-filters-table-cell-value { display: inline-block; font-weight: bold; width: 30%; }
+
+.odwpcfs-companies-table thead th span.order-icons {
+    display: inline-block;
+    height: 14px;
+    position: relative;
+    top: 2px;
+    width: 10px;
+}
+.odwpcfs-companies-table thead th span.order-icons > a {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    cursor: pointer;
+    float: left;
+    height: 0;
+    position: relative;
+    width: 0;
+}
+.odwpcfs-companies-table thead th span.order-icons a.arrow-up {
+    border-bottom: 5px solid #000;
+    top: 0px;
+}
+.odwpcfs-companies-table thead th span.order-icons a.arrow-up:hover {
+    border-bottom: 5px solid #666;
+}
+.odwpcfs-companies-table thead th span.order-icons a.arrow-down {
+    border-top: 5px solid #000;
+    top: 4px;
+}
+.odwpcfs-companies-table thead th span.order-icons a.arrow-down:hover {
+    border-top: 5px solid #666;
+}

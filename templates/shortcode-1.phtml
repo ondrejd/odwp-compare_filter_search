@@ -1,0 +1,133 @@
+<?php
+/**
+ * Template file for shortcode "Tabulka společností".
+ *
+ * @author  Ondřej Doněk, <ondrejd@gmail.com>
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-compare_filter_search
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+/**
+ * Used parameters (taken from {@see odwpcfs_add_shortcode_1()}).
+ *
+ * @param array $attrs
+ * @param array $companies
+ * @param integer $current_page
+ * @param integer $total_count
+ * @param integer $total_pages
+ */
+
+?><div id="odwpcfs-shortcode-1">
+    <?php if ( (bool) $attrs['show_title'] === true && ! empty( $attrs['title'] ) ) : ?>
+    <h2 class="odwpcfs-shortcode-1-title"><?php echo esc_html( $attrs['title'] ); ?></h2>
+    <?php endif;?>
+    <table class="odwpcfs-companies-table">
+        <thead>
+            <tr>
+                <th class="column-logo"><!-- <?php echo __( 'Logo', ODWPCFS_SLUG ); ?>--></th>
+                <th class="column-rating">
+                    <?php echo __( 'Hodnocení', ODWPCFS_SLUG ); ?>
+                    <span class="order-icons">
+                        <a href="#" title="<?php _e( 'Seřadit vzestupně', ODWPCFS_SLUG ); ?>" class="arrow-up"></a>
+                        <a href="#" title="<?php _e( 'Seřadit sestupně', ODWPCFS_SLUG ); ?>" class="arrow-down"></a>
+                    </span>
+                </th>
+                <th class="column-bonus">
+                    <?php echo __( 'Bonus', ODWPCFS_SLUG ); ?>
+                    <span class="order-icons">
+                        <a href="#" title="<?php _e( 'Seřadit vzestupně', ODWPCFS_SLUG ); ?>" class="arrow-up"></a>
+                        <a href="#" title="<?php _e( 'Seřadit sestupně', ODWPCFS_SLUG ); ?>" class="arrow-down"></a>
+                    </span>
+                </th>
+                <th class="column-links" colspan="2">
+                    <?php echo __( 'Odkazy', ODWPCFS_SLUG ); ?>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ( count( $companies ) > 0 ) : foreach ( $companies as $company ) : 
+                $rating = get_post_meta( $company->ID, 'odwpcfs-metabox-1', true );
+                $bonus  = get_post_meta( $company->ID, 'odwpcfs-metabox-2', true );
+                $logo   = odwpcfs_get_thumbnail( $company->ID );
+                $regis  = get_post_meta( $company->ID, 'odwpcfs-metabox-3', true );
+                $review = '';
+                $pageid = intval( get_post_meta( $company->ID, 'odwpcfs-metabox-3', true ) );
+                if ( $pageid > 0 ) {
+                    $review = get_page_link( $pageid );
+                }
+
+                if ( empty( $logo ) ) {/** @todo Defaultni blank obrazek! */}
+            ?>
+            <tr>
+                <td class="column-logo">
+                    <a href="<?php echo empty( $review ) ? '#' : $review; ?>">
+                        <img src="<?php echo $logo; ?>" alt="<?php echo $company->post_title; ?>" title="<?php echo $company->post_title; ?>">
+                    </a>
+                </td>
+                <td class="column-rating">
+                    <div class="star-ratings-sprite-small">
+                        <span id="odwpcfs-metabox-1-stars" style="width: <?php echo intval( $rating ); ?>%" class="star-ratings-sprite-rating-small"></span>
+                    </div>
+                    <p><?php printf( __( 'Celkem %s%%', ODWPCFS_SLUG ), $rating ); ?></p>
+                </td>
+                <td class="column-bonus">
+                    <?php echo empty( $bonus ) ? '&ndash;' : $bonus; ?>
+                </td>
+                <td class="column-links">
+                    <?php if ( empty( $review ) ) : ?>
+                    <span class="odwpcfs-company-no_review"><?php echo __( 'Recenze', ODWPCFS_SLUG ); ?></span>
+                    <?php else : ?>
+                    <a href="<?php echo $review; ?>"><?php echo __( 'Recenze', ODWPCFS_SLUG ); ?></a>
+                    <?php endif; ?>
+                </td>
+                <td class="column-links">
+                    <?php if ( empty( $regis ) ) : ?>
+                    <a href="#" class="button button-primary button-small button-disabled"><?php echo __( 'Hrej', ODWPCFS_SLUG ); ?></a>
+                    <?php else : ?>
+                    <a href="<?php echo $regis; ?>" class="button button-primary button-small"><?php echo __( 'Hrej', ODWPCFS_SLUG ); ?></a>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <?php endforeach; else : ?>
+            <tr>
+                <td colspan="5">
+                    <p><strong><?php __( 'Nebyly nalezeny žádné společnosti.', ODWPCFS_SLUG ); ?></strong></p>
+                </td>
+            </tr>
+            <?php endif; ?>
+        </tbody>
+        <?php if ( $total_pages > 1 ) : ?>
+        <tfoot>
+            <tr>
+                <td colspan="5" class="odwpcfs-companies-paging">
+                    <?php if ( $current_page == 1 ) : ?>
+                    <span><span>&laquo;</span><span>
+                    <span><span>&lsaquo;</span><span>
+                    <?php else : ?>
+                    <a href="<?php echo home_url( add_query_arg( array( 'ocptp' => 1, 'ocptpf' => $filter_url_part ), add_query_arg( null, null ) ) ); ?>" class="button button-link"><span>&laquo;</span></a>
+                    <a href="<?php echo home_url( add_query_arg( array( 'ocptp' => $current_page - 1, 'ocptpf' => $filter_url_part ), add_query_arg( null, null ) ) ); ?>" class="button button-link"><span>&lsaquo;</span></a>
+                    <?php endif; ?>
+                    <?php for ( $i = 1; $i <= $total_pages; $i++ ) : ?>
+                    <?php if ( $current_page == $i ) : ?>
+                    <span class="button odwpcfs-current-filter"><strong><?php echo $i; ?></strong></span>
+                    <?php else : ?>
+                    <a href="<?php echo home_url( add_query_arg( array( 'ocptp' => $i, 'ocptpf' => $filter_url_part ), add_query_arg( null, null ) ) ); ?>" class="button button-link"><span><?php echo $i; ?></span></a>
+                    <?php endif; ?>
+                    <?php endfor; ?>
+                    <?php if ( $current_page == $total_pages ) : ?>
+                    <span><span>&rsaquo;</span></span>
+                    <span><span>&raquo;</span></span>
+                    <?php else : ?>
+                    <a href="<?php echo home_url( add_query_arg( array( 'ocptp' => $current_page + 1, 'ocptpf' => $filter_url_part ), add_query_arg( null, null ) ) ); ?>" class="button button-link"><span>&rsaquo;</span></a>
+                    <a href="<?php echo home_url( add_query_arg( array( 'ocptp' => $total_pages, 'ocptpf' => $filter_url_part ), add_query_arg( null, null ) ) ); ?>" class="button button-link"><span>&raquo;</span></a>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        </tfoot>
+        <?php endif; ?>
+    </table>
+</div>
