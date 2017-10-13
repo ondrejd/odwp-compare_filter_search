@@ -4,7 +4,15 @@
 
 __This plugin is not finished yet.__
 
-## Main features
+## Donations
+
+If your like this plugin and you want to be maintained and improved more frequently consider donation:
+
+[![Make donation](https://www.paypalobjects.com/webstatic/paypalme/images/pp_logo_small.png "PayPal.Me, your link to getting paid")][3]
+
+## Description
+
+Main features:
 
 * ...
 * ...
@@ -26,3 +34,4 @@ __This plugin is not finished yet.__
 
 [1]:https://wordpress.org/
 [2]:https://codex.wordpress.org/Post_Types#Custom_Post_Types
+[3]:https://www.paypal.me/ondrejd
