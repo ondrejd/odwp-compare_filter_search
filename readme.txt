@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-WordPress plugin that adds custom post type __company__ as well as filters by which can be companies sorted.
+WordPress plugin that adds custom post type "company" as well as filters by which can be companies sorted.
 
 
 == Installation ==
