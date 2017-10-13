@@ -1,14 +1,15 @@
 <?php
 /**
- * Plugin Name: odwp-compare_filter_search
- * Plugin URI: https://bitbucket.org/ondrejd/odwp-compare_filter_search
- * Description: 
+ * Plugin Name: Compare, Filter, Search
+ * Plugin URI: https://github.com/ondrejd/odwp-compare_filter_search
+ * Description: <strong>WordPress</strong> plugin that adds <em>custom post type</em> <strong>company</strong> as well as filters by which can be companies sorted.
  * Version: 1.0.0
  * Author: Ondřej Doněk
- * Author URI: 
+ * Author URI: https://ondrejd.com/
+ * Donate link: https://www.paypal.me/ondrejd
  * License: GPLv3
  * Requires at least: 4.6
- * Tested up to: 4.7.3
+ * Tested up to: 4.8.2
  *
  * @author  Ondřej Doněk, <ondrejd@gmail.com>
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
@@ -75,7 +76,7 @@ if ( ! function_exists( 'odwpcfs_custom_post_type' ) ) :
             'show_in_admin_bar'     => true,
             'show_in_nav_menus'     => true,
             'can_export'            => true,
-            'has_archive'           => true,        
+            'has_archive'           => true,
             'exclude_from_search'   => false,
             'publicly_queryable'    => true,
             'capability_type'       => 'page',
@@ -105,7 +106,7 @@ if ( !function_exists( 'odwpcfs_metaboxes' ) ) :
      */
     function odwpcfs_metaboxes() {
         global $odwpcfs_metaboxes;
-        
+
         for( $i = 1; $i <= count( $odwpcfs_metaboxes ); $i++ ) {
             add_meta_box(
                sprintf( 'odwpcfs-metabox-%d', $i ),
@@ -127,9 +128,9 @@ if ( !function_exists( 'odwpcfs_add_metaboxes' ) ) :
      */
     function odwpcfs_add_metaboxes() {
         global $odwpcfs_metaboxes;
-        
+
         add_action( 'add_meta_boxes', 'odwpcfs_metaboxes' );
-        
+
         for( $i = 1; $i <= count( $odwpcfs_metaboxes ); $i++ ) {
             add_action( 'save_post', sprintf( 'odwpcfs_save_metabox_%d', $i ), 10, 3 );
         }
@@ -186,7 +187,7 @@ if ( !function_exists( 'odwpcfs_cpt_columns' ) ) :
     }
 endif;
 add_filter( 'manage_posts_columns', 'odwpcfs_cpt_columns' );
- 
+
 
 if ( !function_exists( 'odwpcfs_cpt_columns_content' ) ) :
     /**

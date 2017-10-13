@@ -1,17 +1,17 @@
-=== Plugin Name ===
-Contributors: ondrejd
-Donate link: 
+=== Compare, Filter, Search ===
+Contributors: Ondřej Doněk
+Donate link: https://www.paypal.me/ondrejd
 Tags: custom data, custom filter, custom search
 Requires at least: 4.6
-Tested up to: 4.7.3
-Stable tag: 1.0
-License: GPLv2 or later
+Tested up to: 4.8.2
+Stable tag: 1.0.0
+License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 == Description ==
 
-Plugin pro vytvoření tabulky s daty, které pujde snadno porovnat, filtrovat i prohledávat.
+WordPress plugin that adds custom post type __company__ as well as filters by which can be companies sorted.
 
 
 == Installation ==

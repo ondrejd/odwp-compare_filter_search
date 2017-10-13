@@ -1,6 +1,6 @@
 /* Stars rating */
 .star-ratings-sprite {
-    background: url("../img/stars.png") repeat-x;
+    background: url("../images/stars.png") repeat-x;
     display: inline-block;
     font-size: 0;
     height: 21px;
@@ -11,7 +11,7 @@
     margin: 0 auto;
 }
 .star-ratings-sprite-rating {
-    background: url("../img/stars.png") repeat-x;
+    background: url("../images/stars.png") repeat-x;
     background-position: 0 100%;
     float: left;
     height: 21px;
@@ -20,7 +20,7 @@
 
 /* Stars rating - small version */
 .star-ratings-sprite-small {
-    background: url("../img/star-gray-sm.png") repeat-x;
+    background: url("../images/star-gray-sm.png") repeat-x;
     display: inline-block;
     font-size: 0;
     height: 11px;
@@ -31,7 +31,7 @@
     margin: 0 auto;
 }
 .star-ratings-sprite-rating-small {
-    background: url("../img/star-orange-sm.png") repeat-x;
+    background: url("../images/star-orange-sm.png") repeat-x;
     float: left;
     height: 11px;
     display: block;
