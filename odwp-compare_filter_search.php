@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Compare, Filter, Search
  * Plugin URI: https://github.com/ondrejd/odwp-compare_filter_search
- * Description: <strong>WordPress</strong> plugin that adds <em>custom post type</em> <strong>company</strong> as well as filters by which can be companies sorted.
+ * Description: Plugin that adds <em>custom post type</em> <strong>company</strong> as well as filters by which can be companies sorted.
  * Version: 1.0.0
  * Author: Ondřej Doněk
  * Author URI: https://ondrejd.com/
